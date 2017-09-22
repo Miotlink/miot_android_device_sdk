@@ -269,13 +269,6 @@ public class VspOperation {
 		VspProperty vp = vm.getProperty(VspDefine.propCommonRes);
 		int vspCommonResReqcode = vp
 				.getIntValue(VspDefine.CommonRes_reqCode_idx);
-		if (vspCallback!=null){
-			try {
-				vspCallback.loginRes(-3,"username password is error","");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
 		stopVspRequestWaiting = true;
 		return true;
 	}
@@ -710,7 +703,6 @@ public class VspOperation {
 		if (GetCmsAddress()) {
 			updateLoginActTitle("获取CMS地址完毕!");
 			if (PuLogin(userName,password)) {
-
 				updateLoginActTitle("登录成功!");
 				VspOperation.userName = userName;
 				VspOperation.password = password;
