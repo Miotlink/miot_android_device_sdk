@@ -75,6 +75,7 @@ public class SmartService extends BaseService{
 	@Override
 	public void loginRes(int errorCode, String errorMessage, String data) throws Exception {
 		Log.e("error",data);
+		Log.e("error",errorMessage);
 		if (ACache.get(this).getAsString(MLContent.FORMAL_SERVER_IP)==null){
 			ACache.get(this).put(MLContent.FORMAL_SERVER_URL,VspOperation.rsIp,24*60*60);
 		}
@@ -87,6 +88,7 @@ public class SmartService extends BaseService{
 		if (errorCode==-3){
 			SmartService.errorMessage="妙联平台未认证此设备MAC";
 		}
+		new PuTask(platformBind,mBaseHandler).execute(100003+"");
 		//登录失败，5s登录一次
 		mBaseHandler.sendEmptyMessageDelayed(100006,5000);
 		sharedPreferencesUtil.setLogin(false);
