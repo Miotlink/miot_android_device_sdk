@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:text="设备端SDK"
+        android:layout_height="50dp"/>
+    <TextView
+        android:text="注意：SDK 为ANDROID 操作系统提供,Application先初始化后提供调用,\n传入参数Context,MAC"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+    <Button
+        android:id="@+id/getPuList"
+        android:text="getPuList"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+    <EditText
+        android:id="@+id/uart_data"
+        android:layout_width="match_parent"
+        android:hint="INPUT_UART_DATA"
+        android:text="F1F1010201FF037E"
+        android:layout_height="50dp"/>
+    <Button
+        android:id="@+id/send_pu_to_pu"
+        android:text="SEND_PUTOPU"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+    <Button
+        android:id="@+id/send_pu_scene"
+        android:text="SEND_PUTOSCENE"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+</LinearLayout>
