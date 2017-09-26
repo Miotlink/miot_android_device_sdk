@@ -15,4 +15,6 @@ public abstract class ServiceOpenInterface {
 	 */
 	public abstract String getOpenApiReverseGetThings(String mac,int sessionId)throws Exception;
 	public abstract String getPuState(String mac,int sessionId,String puName,String puId)throws Exception;
+	public abstract String checkPuBind(String mac)throws Exception;
+	public abstract String bindPu(String id,String mac)throws Exception;
 }

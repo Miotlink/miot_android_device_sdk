@@ -3,9 +3,9 @@ package com.miot.android.udp;
 import android.content.Context;
 
 import com.miot.android.listener.IReceiver;
+import com.miot.android.listener.SmartConfigIReceiver;
 import com.miot.android.sdk.MiotSDKInitializer;
-
-import java.io.UnsupportedEncodingException;
+import com.miot.android.utils.VspContent;
 
 /**
  * Created by Administrator on 2016/11/7 0007.
@@ -31,36 +31,28 @@ public class UDP_SmartIReceiver implements IReceiver {
 		return instance;
 	}
 
+	private SmartConfigIReceiver smartConfigIReceiver=null;
+
+	public void setSmartConfigIReceiver(SmartConfigIReceiver smartConfigIReceiver) {
+		this.smartConfigIReceiver = smartConfigIReceiver;
+	}
+
 	private UDP_SmartIReceiver(Context context) {
 		this.context = context;
 	}
-
-
 
 	/**
 	 * 监听端口初始化
 	 *
 	 * @param port
 	 */
-	public void init(int port) {
+	public void init(int port) throws Exception{
 		this.port = port;
 		udpSocket = new UDPSocket(context);
 		udpSocket.startRecv(port, this);
 	}
-	public void sendRobotInfo(String ip,int port,String content) {
-		byte[] bs = null;
-		try {
-			if (content.isEmpty()) {
-				return;
-			}
-			bs = content.getBytes("UTF-8");
-			sendUdp(ip, port, bs);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-	}
 
-	private boolean sendUdp(String ip, int port, byte[] content) {
+	public boolean send(String ip, int port, byte[] content) {
 		try {
 			if (udpSocket!=null) {
 				udpSocket.send(ip, port, content, content.length);
@@ -72,23 +64,17 @@ public class UDP_SmartIReceiver implements IReceiver {
 		return true;
 	}
 
-	public boolean sendUdpVsp(byte[] content) {
-		try {
-			if (udpSocket!=null) {
-				udpSocket.send("255.255.255.255", 65536, content, content.length);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-	}
+
 
 	@Override
 	public void onReceive(int localPort, String host, int port, byte[] bs, int len) {
 		try {
-			String msg = new String(bs, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
+			byte [] bytes=VspContent.decodeMlccMsg(bs);
+			String msg = VspContent.getMlccContent(bytes,bytes.length);
+			if (smartConfigIReceiver!=null){
+				smartConfigIReceiver.onSmartConfigIReceiver(msg);
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

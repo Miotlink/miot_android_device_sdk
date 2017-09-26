@@ -27,7 +27,7 @@ public class UDPSocket implements Runnable {
 
 	private Context context;
 
-	public UDPSocket(Context context){
+	public UDPSocket(Context context)throws Exception{
 		this.context=context;
 		WifiManager manager = (WifiManager) context
 				.getSystemService(Context.WIFI_SERVICE);
@@ -58,12 +58,7 @@ public class UDPSocket implements Runnable {
 	public boolean needStop = false;
 
 	private InetAddress address = null;
-
-
 	private DatagramPacket dPacket = null;
-
-
-
 	public boolean send(String ip, int port, byte[] bs, int len) {
 		try {
 

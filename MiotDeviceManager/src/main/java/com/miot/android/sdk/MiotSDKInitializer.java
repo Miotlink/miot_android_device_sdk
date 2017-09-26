@@ -11,6 +11,7 @@ import com.cncrit.qiaoqiao.VspOperation;
 import com.miot.android.binder.BinderManager;
 import com.miot.android.binder.PlatformBind;
 import com.miot.android.listener.DeviceStateOnReceiver;
+import com.miot.android.manager.UDPManager;
 import com.miot.android.service.SmartService;
 import com.miot.android.task.HostAddressTask;
 import com.miot.android.utils.ACache;
@@ -56,6 +57,10 @@ public class MiotSDKInitializer {
 
 	private MyServiceConnection myServiceConnection=null;
 
+	private UDPManager manager=null;
+
+	private Intent smartService=null;
+
 	/**
 	 * 初始化方式
 	 * @param context  上下文
@@ -72,6 +77,9 @@ public class MiotSDKInitializer {
 
 			return SERVICE_START_MACERROR;
 		}
+
+		manager.getInstance();
+		manager.init();
 		SharedPreferencesUtil.getInstance(context).setMac(mac.toUpperCase());
 		MiotSDKInitializer.MAC=mac.toUpperCase();
 		if (context==null){
@@ -82,7 +90,7 @@ public class MiotSDKInitializer {
 		if (myServiceConnection==null){
 			myServiceConnection=new MyServiceConnection();
 		}
-		Intent smartService=new Intent(context, SmartService.class);
+		 smartService=new Intent(context, SmartService.class);
 		smartService.setAction(MiotSDKInitializer.SERVICE_ACTION);
 		smartService.setPackage(context.getPackageName());
 		context.startService(smartService);
@@ -115,6 +123,42 @@ public class MiotSDKInitializer {
 		return JSONUitls.getId(sharedPreferencesUtil.getPu());
 	}
 
+	/**
+	 * 检查设备绑定状态
+	 * @param mac
+	 * @return
+	 * @throws Exception
+	 */
+	public String miotlinkPlatform_checkPuBind(String mac)throws Exception{
+		String result=WebServerManager.getInstance().checkPuBind(mac);
+		if (result.equals("")){
+			return JSONUitls.getErrorMessage(MLContent.MIOT_INIT_GET_PULIST_SERVICE_FAIL+"","请求服务器失败");
+		}
+		return result;
+	}
+	/**
+	 * 绑定设备接口
+	 */
+
+	public String miotlinkPlatform_bindDevice(String id,String mac)throws Exception{
+		if (id.equals("")||mac.equals("")){
+		 throw  new Exception("userId ||mac is error");
+		}
+
+		if (!mac.toUpperCase().equals(MiotSDKInitializer.MAC)){
+			return JSONUitls.getErrorMessage(20001+"","初始化mac与传入mac不匹配");
+		}
+		String result=WebServerManager.getInstance().bindPu(id,mac);
+		if (result.equals("")){
+			return JSONUitls.getErrorMessage(MLContent.MIOT_INIT_GET_PULIST_SERVICE_FAIL+"","请求服务器失败");
+		}
+		if (JSONUitls.parseBindPu(result)){
+			if (manager!=null){
+				manager.start(id);
+			}
+		}
+		return result;
+	}
 	/**
 	 * 发送数据控制设备
 	 * @param id 需要向设备发送的唯一ID
@@ -185,26 +229,9 @@ public class MiotSDKInitializer {
 		return;
 	}
 
-	/**
-	 * 发送数据控制场景
-	 * @param deamonCuId 场景的唯一ID
-	 * @param sceneId 场景执行的数据
-	 * @return
-	 */
-	public String miotlinkPlatform_sendToScene(Integer deamonCuId,Integer sceneId)throws Exception{
-
-		if (sceneId.equals("")||deamonCuId==0){
-			return JSONUitls.getJSONResult(0,"deamonCuId||sceneId  null ","");
-		}
-		if (!sharedPreferencesUtil.getLogin()){
-			return JSONUitls.getJSONResult(MLContent.MIOT_INIT_GET_PULIST_LOGIN,"未登录","");
-		}
-		String data=JSONUitls.getSceneCu(sceneId+"");
-		return BinderManager.getInstance().getPlatformBind().sendPuToCu(deamonCuId,data);
-	}
 
 	/**
-	 * 获取设备列表和场景列表
+	 * 获取设备列表
 	 * @return
 	 * @throws Exception
 	 *
@@ -227,6 +254,25 @@ public class MiotSDKInitializer {
 		}
 		JSONUitls.aCacheAll(context,result);
 		return result;
+	}
+
+	public void onDestory(){
+		if (myServiceConnection!=null){
+			context.unbindService(myServiceConnection);
+			myServiceConnection=null;
+		}
+		if (smartService!=null){
+			context.stopService(smartService);
+			smartService=null;
+			MiotSDKInitializer.MAC=null;
+		}
+		if (manager!=null){
+			manager.onDestory();
+			manager=null;
+		}
+		if (instance!=null){
+			instance=null;
+		}
 	}
 
 

@@ -25,4 +25,15 @@ public class WebServerManager extends ServiceOpenInterface {
 	public String getPuState(String mac,int sessionId,String puName,String puId) throws Exception {
 		return webService.call(methodName, ParmasUitls.getParmas(ParmasUitls.getPuState(mac,sessionId,puName,puId)));
 	}
+
+	@Override
+	public String checkPuBind(String mac) throws Exception {
+		return webService.call(methodName, ParmasUitls.getParmas(ParmasUitls.checkPuBind(mac)));
+	}
+
+	@Override
+	public String bindPu(String id, String mac) throws Exception {
+
+		return null;
+	}
 }

@@ -267,9 +267,7 @@ public class VspOperation {
 
 	private static boolean procCommonRes(VspMessage vm) {
 		VspProperty vp = vm.getProperty(VspDefine.propCommonRes);
-		int vspCommonResReqcode = vp
-
-				.getIntValue(VspDefine.CommonRes_reqCode_idx);
+		int vspCommonResReqcode = vp.getIntValue(VspDefine.CommonRes_reqCode_idx);
 		stopVspRequestWaiting = true;
 		return true;
 	}

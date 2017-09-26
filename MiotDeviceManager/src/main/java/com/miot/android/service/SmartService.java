@@ -97,7 +97,6 @@ public class SmartService extends BaseService{
 	@Override
 	public void timeOut() {
 		mBaseHandler.sendEmptyMessage(100006);
-
 	}
 
 	@Override
