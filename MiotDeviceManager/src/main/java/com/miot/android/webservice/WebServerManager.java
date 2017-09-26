@@ -33,7 +33,6 @@ public class WebServerManager extends ServiceOpenInterface {
 
 	@Override
 	public String bindPu(String id, String mac) throws Exception {
-
-		return null;
+		return webService.call(methodName,ParmasUitls.getParmas(ParmasUitls.bindPu(id,mac)));
 	}
 }

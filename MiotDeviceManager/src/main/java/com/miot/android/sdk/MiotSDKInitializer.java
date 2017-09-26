@@ -5,7 +5,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 
 import com.cncrit.qiaoqiao.VspOperation;
 import com.miot.android.binder.BinderManager;
@@ -78,15 +80,16 @@ public class MiotSDKInitializer {
 			return SERVICE_START_MACERROR;
 		}
 
-		manager.getInstance();
-		manager.init();
-		SharedPreferencesUtil.getInstance(context).setMac(mac.toUpperCase());
+
 		MiotSDKInitializer.MAC=mac.toUpperCase();
 		if (context==null){
 			return SERVICE_START_FAIL;
 		}
 		sharedPreferencesUtil=SharedPreferencesUtil.getInstance(context);
+		sharedPreferencesUtil.setMac(mac.toUpperCase());
 		this.context=context;
+		manager=UDPManager.getInstance();
+		manager.init();
 		if (myServiceConnection==null){
 			myServiceConnection=new MyServiceConnection();
 		}
@@ -136,15 +139,18 @@ public class MiotSDKInitializer {
 		}
 		return result;
 	}
-	/**
-	 * 绑定设备接口
-	 */
 
+	/**
+	 *
+	 * @param id 扫描二维码生成的ID
+	 * @param mac 本机设备的MAC地址
+	 * @return String
+	 * @throws Exception
+	 */
 	public String miotlinkPlatform_bindDevice(String id,String mac)throws Exception{
 		if (id.equals("")||mac.equals("")){
 		 throw  new Exception("userId ||mac is error");
 		}
-
 		if (!mac.toUpperCase().equals(MiotSDKInitializer.MAC)){
 			return JSONUitls.getErrorMessage(20001+"","初始化mac与传入mac不匹配");
 		}
@@ -154,14 +160,31 @@ public class MiotSDKInitializer {
 		}
 		if (JSONUitls.parseBindPu(result)){
 			if (manager!=null){
-				manager.start(id);
+				Message message=new Message();
+				message.what=10001;
+				message.obj=id;
+				handler.sendMessage(message);
 			}
 		}
 		return result;
 	}
+
+	Handler handler=new Handler(){
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			if (msg.what==10001){
+				if (manager!=null){
+					manager.start(msg.obj.toString());
+				}
+			}
+		}
+	};
+
 	/**
 	 * 发送数据控制设备
 	 * @param id 需要向设备发送的唯一ID
+	 * @param puName 该设备的MAC地址
 	 * @param uart 串口数据格式为F1F1*********7E结尾
 	 * @return
 	 */

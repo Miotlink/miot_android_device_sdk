@@ -1,5 +1,7 @@
 package com.miot.android.manager;
 
+import android.util.Log;
+
 import com.miot.android.listener.SmartConfigIReceiver;
 import com.miot.android.sdk.MiotSDKInitializer;
 import com.miot.android.udp.UDP_SmartIReceiver;
@@ -31,8 +33,11 @@ public class UDPManager implements SmartConfigIReceiver{
 	private UDP_SmartIReceiver smartIReceiver=UDP_SmartIReceiver.getInstance();;
 
 	public void init()throws Exception{
-		smartIReceiver.init(64540);
-
+		try {
+			smartIReceiver.init(64540);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private String userId="";
@@ -42,13 +47,17 @@ public class UDPManager implements SmartConfigIReceiver{
 	public void start(String userId){
 		this.userId=userId;
 		smartIReceiver.setSmartConfigIReceiver(this);
-		myThread=new MyThread();
-		myThread.start();
+		if (myThread==null){
+			isRun=true;
+			myThread=new MyThread();
+			myThread.start();
+		}
 	}
 
 
 
 	public boolean send()throws Exception{
+		Log.e("send",JSONUitls.getSmartConfigMessageRes(JSONUitls.getSmartConfigMessage(userId, MiotSDKInitializer.MAC)));
 		byte[] bytes= JSONUitls.getSmartConfigMessageRes(JSONUitls.getSmartConfigMessage(userId, MiotSDKInitializer.MAC)).getBytes("ISO-8859-1");
 		return smartIReceiver.send("255.255.255.255",63541,VspContent.formatLsscCmdBuffer(bytes));
 	}

@@ -130,7 +130,7 @@ public class JSONUitls {
 
 	public static JSONObject getSmartConfigMessage(String userId,String mac)throws Exception{
 		JSONObject jsonObject=new JSONObject();
-		jsonObject.put("host",NetUtil.getWifiMacAddress());
+		jsonObject.put("host",NetUtil.getWifiIpAddress());
 		jsonObject.put("mac", MiotSDKInitializer.MAC);
 		jsonObject.put("port",65539);
 		jsonObject.put("codeName","smartConfig");
