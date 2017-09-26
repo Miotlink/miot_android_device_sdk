@@ -1,7 +1,10 @@
 package com.miot.android.webservice;
 
+import com.miot.android.utils.Base64;
 import com.miot.android.utils.MD5;
 import com.miot.android.utils.MacUtils;
+
+import org.json.JSONObject;
 
 /**
  * Created by Administrator on 2017/9/20 0020.
@@ -65,11 +68,11 @@ public class ParmasUitls {
 		return params;
 	}
 	public static String bindPu(String id,String mac)throws Exception{
-//		String userId= Base64.decode(id,"UTF-8");
-//		if (userId.equals("")){
-//			return "";
-//		}
-//		JSONObject jsonObject=new JSONObject(userId);
+		String userId= Base64.decode(id,"UTF-8");
+		if (userId.equals("")){
+			return "";
+		}
+		JSONObject jsonObject=new JSONObject(userId);
 
 		String kind="300";
 		String model="356";
@@ -78,15 +81,15 @@ public class ParmasUitls {
 		String cuId="100066";
 		String cuSession="1476133";
 		String latitude="";
-//		if (jsonObject!=null){
-//			kind=jsonObject.getString("kind");
-//			model=jsonObject.getString("model");
-//			nickname=jsonObject.getString("nickname");
-//			longitude=jsonObject.getString("longitude");
-//			latitude=jsonObject.getString("latitude");
-//			cuId=jsonObject.getString("cuId");
-//			cuSession=jsonObject.getString("cuSession");
-//		}
+		if (jsonObject!=null){
+			kind=jsonObject.getString("kind");
+			model=jsonObject.getString("model");
+			nickname=jsonObject.getString("nickname");
+			longitude=jsonObject.getString("longitude");
+			latitude=jsonObject.getString("latitude");
+			cuId=jsonObject.getString("cuId");
+			cuSession=jsonObject.getString("cuSession");
+		}
 
 		String params="";
 		String code = "bindByPu";
