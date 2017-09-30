@@ -116,8 +116,4 @@ public class SmartService extends BaseService{
 	}
 
 
-
-
-
-
 }
