@@ -68,29 +68,32 @@ public class ParmasUitls {
 		return params;
 	}
 	public static String bindPu(String id,String mac)throws Exception{
-		String userId= Base64.decode(id,"UTF-8");
-		if (userId.equals("")){
-			return "";
-		}
-		JSONObject jsonObject=new JSONObject(userId);
 
-		String kind="300";
-		String model="356";
+		String kind="354";
+		String model="655";
 		String nickname="智能设备";
 		String longitude="";
 		String cuId="100066";
-		String cuSession="1476133";
+		String cuSession="1479316";
 		String latitude="";
-		if (jsonObject!=null){
-			kind=jsonObject.getString("kind");
-			model=jsonObject.getString("model");
-			nickname=jsonObject.getString("nickname");
-			longitude=jsonObject.getString("longitude");
-			latitude=jsonObject.getString("latitude");
-			cuId=jsonObject.getString("cuId");
-			cuSession=jsonObject.getString("cuSession");
-		}
+		try{
+			String userId= Base64.decode(id,"UTF-8");
+			if (userId.equals("")){
+				return "";
+			}
+			JSONObject jsonObject=new JSONObject(userId);
+			if (jsonObject!=null){
+				kind=jsonObject.getString("kind");
+				model=jsonObject.getString("model");
+				nickname=jsonObject.getString("nickname");
+				longitude=jsonObject.getString("longitude");
+				latitude=jsonObject.getString("latitude");
+				cuId=jsonObject.getString("cuId");
+				cuSession=jsonObject.getString("cuSession");
+			}
+		}catch (Exception e){
 
+		}
 		String params="";
 		String code = "bindByPu";
 		String serial = MacUtils.mac2serial(mac);

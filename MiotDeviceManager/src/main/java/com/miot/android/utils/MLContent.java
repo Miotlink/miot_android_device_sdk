@@ -7,12 +7,12 @@ public class MLContent {
 //	public static final String FORMAL_SERVER_URL="118.190.67.214";
 //	public static String FORMAL_SERVER_IP="118.190.67.214";
 //	public final static String FORMAL_URL="118.190.67.214";
-	public static final String FORMAL_SERVER_URL="60.191.23.28";
+	public static final String FORMAL_SERVER_URL="www.51miaomiao.com";
 	public static String FORMAL_SERVER_IP="60.191.23.28";
-	public final static String FORMAL_URL="60.191.23.28";
+	public final static String FORMAL_URL="dev.51miaomiao.com";
 	public static String ENDPOINT = "http://"
-			+ FORMAL_SERVER_URL
-			+ ":88/axis2/services/openBuzService";
+			+ FORMAL_URL
+			+ ":80/axis2/services/openBuzService";
 	public final static String NAMESPACE = "http://www.miotlink.org/openBuzService/";
 
 

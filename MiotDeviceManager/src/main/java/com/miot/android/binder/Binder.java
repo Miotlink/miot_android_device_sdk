@@ -10,6 +10,7 @@ public abstract class Binder extends android.os.Binder {
 	public abstract String sendPuToPu(Integer puId,String uart)throws Exception;
 
 	public abstract String sendPuToCu(Integer id,String userData)throws Exception;
+	public abstract String sendPuToSceen(Integer id,String userData)throws Exception;
 
 	public abstract void Logout()throws Exception;
 }

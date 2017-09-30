@@ -732,10 +732,10 @@ public class VspOperation {
 		}
 		VspMessage vm = new VspMessage(VspDefine.codeTTBinary, sessionId);
 		VspProperty vp = vm.addProperty(VspDefine.propId);
-		vp.setIntValue(VspDefine.Id_type_idx, 1);
+		vp.setIntValue(VspDefine.Id_type_idx, 0);
 		vp.setIntValue(VspDefine.Id_id_idx, cuId);
 		vp = vm.addProperty(VspDefine.propId);
-		vp.setIntValue(VspDefine.Id_type_idx, 0);
+		vp.setIntValue(VspDefine.Id_type_idx, 1);
 		vp.setIntValue(VspDefine.Id_id_idx, puId);
 		vp = vm.addProperty(VspDefine.propTTContent);
 		vp.setIntValue(VspDefine.TTContent_type_idx, type);
@@ -755,8 +755,8 @@ public class VspOperation {
 		Log.e("content",content+"");
 		VspMessage vm = new VspMessage(VspDefine.codeTTBinary, sessionId);
 		VspProperty vp = vm.addProperty(VspDefine.propId);
-		vp.setIntValue(VspDefine.Id_type_idx, 1);
-		vp.setIntValue(VspDefine.Id_id_idx, cuId);
+		vp.setIntValue(VspDefine.Id_type_idx, 0);
+		vp.setIntValue(VspDefine.Id_id_idx, puId);
 		vp = vm.addProperty(VspDefine.propId);
 		vp.setIntValue(VspDefine.Id_type_idx, 1);
 		vp.setIntValue(VspDefine.Id_id_idx, toCuId);
@@ -781,6 +781,28 @@ public class VspOperation {
 		vp.setIntValue(VspDefine.Id_id_idx, puId);
 		vp = vm.addProperty(VspDefine.propId);
 		vp.setIntValue(VspDefine.Id_type_idx, 1);
+		vp.setIntValue(VspDefine.Id_id_idx, toCuId);
+		vp = vm.addProperty(VspDefine.propTTContent);
+		vp.setIntValue(VspDefine.TTContent_type_idx, type);
+		vp.setIntValue(VspDefine.TTContent_userTag_idx, userTag);
+		vp.setVariableValue(VspDefine.TTContent_data_idx, content);
+		cmsVc.send(vm);
+		return true;
+	}
+	public static boolean puToPuDevice(int toCuId, String content, int type, int userTag ) {
+		if (cmsVc == null) {
+
+			return false;
+		}
+		send=0;
+		Log.e("puId",puId+"");
+		Log.e("content",content+"");
+		VspMessage vm = new VspMessage(VspDefine.codeTTBinary, sessionId);
+		VspProperty vp = vm.addProperty(VspDefine.propId);
+		vp.setIntValue(VspDefine.Id_type_idx, 0);
+		vp.setIntValue(VspDefine.Id_id_idx, puId);
+		vp = vm.addProperty(VspDefine.propId);
+		vp.setIntValue(VspDefine.Id_type_idx, 0);
 		vp.setIntValue(VspDefine.Id_id_idx, toCuId);
 		vp = vm.addProperty(VspDefine.propTTContent);
 		vp.setIntValue(VspDefine.TTContent_type_idx, type);

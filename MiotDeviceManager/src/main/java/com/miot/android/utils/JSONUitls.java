@@ -116,7 +116,6 @@ public class JSONUitls {
 		JSONObject jsonObject=new JSONObject();
 		jsonObject.put("host",NetUtil.getWifiMacAddress());
 		jsonObject.put("mac", MiotSDKInitializer.MAC);
-		jsonObject.put("port",65539);
 		jsonObject.put("codeName","smartConnected");
 		return  jsonObject;
 	}
@@ -132,7 +131,7 @@ public class JSONUitls {
 		JSONObject jsonObject=new JSONObject();
 		jsonObject.put("host",NetUtil.getWifiIpAddress());
 		jsonObject.put("mac", MiotSDKInitializer.MAC);
-		jsonObject.put("port",65539);
+		jsonObject.put("userId", userId);
 		jsonObject.put("codeName","smartConfig");
 		return  jsonObject;
 	}
