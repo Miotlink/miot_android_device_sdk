@@ -7,7 +7,7 @@ public class MLContent {
 //	public static final String FORMAL_SERVER_URL="118.190.67.214";
 //	public static String FORMAL_SERVER_IP="118.190.67.214";
 //	public final static String FORMAL_URL="118.190.67.214";
-	public static final String FORMAL_SERVER_URL="www.51miaomiao.com";
+	public static final String FORMAL_SERVER_URL="60.191.23.28";
 	public static String FORMAL_SERVER_IP="60.191.23.28";
 //	public final static String FORMAL_URL="dev.51miaomiao.com";
 	public final static String FORMAL_URL="60.191.23.28";

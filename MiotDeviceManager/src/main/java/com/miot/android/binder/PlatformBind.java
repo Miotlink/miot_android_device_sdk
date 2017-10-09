@@ -26,14 +26,14 @@ public class PlatformBind extends Binder  {
 	@Override
 	public String sendPuToCu(Integer id, String userData)throws Exception {
 		if (VspOperation.toCu(id,userData,1,0)){
-			return JSONUitls.getJSONResult(1,"success","");
+			return "";
 		}
 		return JSONUitls.getJSONResult(-1,"send fail","");
 	}
 	@Override
 	public String sendPuToSceen(Integer id, String userData) throws Exception {
-		 if (VspOperation.toPu(id,userData,1,0)){
-			return JSONUitls.getJSONResult(1,"success","");
+		 if (VspOperation.puToCuDevice(id,userData,1,0)){
+			 return "";
 		}
 		return JSONUitls.getJSONResult(-1,"send fail","");
 	}
