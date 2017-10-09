@@ -231,7 +231,7 @@ public class MiotSDKInitializer {
 				return;
 			}
 			if (onReceiver!=null){
-				onReceiver.onReceiverDeviceRes(JSONUitls.getJSONResult(Integer.parseInt(jsonObject.getString("resultCode")),jsonObject.getString("resultMsg"),""));
+				onReceiver.onReceiverDeviceRes(JSONUitls.getJSONResult(Integer.parseInt(body.getString("resultCode")),body.getString("resultMsg"),""));
 			}
 			return;
 		}
