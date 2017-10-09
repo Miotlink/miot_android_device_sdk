@@ -115,7 +115,7 @@ public class MmwParseUartUtils {
 	public static String doLinkBindParse(String string) {
 		String smlcc = "";
 		try {
-			if (string.startsWith("CodeName=GetUartData")) {
+			if (string.startsWith("CodeName=GetUartData")||string.startsWith("CodeName=UartUpLoadData")) {
 				if (string.startsWith("UserBinaryData=",
 						string.indexOf("UserBinaryData="))) {
 					smlcc = string.substring(string.indexOf("UserBinaryData=")
