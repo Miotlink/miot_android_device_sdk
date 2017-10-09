@@ -18,7 +18,7 @@ public class PlatformBind extends Binder  {
 	@Override
 	public String sendPuToPu(Integer puId, String uart)throws Exception {
 		if (VspOperation.puToPu(puId,uart,1,0)){
-			return JSONUitls.getJSONResult(1,"success","");
+			return "";
 		}
 		return JSONUitls.getJSONResult(-1,"send fail","");
 	}

@@ -535,6 +535,7 @@ public class VspOperation {
 				vp.getIntValue(VspDefine.TTContent_type_idx)+","+
 				vp.getIntValue(VspDefine.TTContent_userTag_idx)+","+
 				content+"}";
+			Log.e("message",s);
 			if (deviceStateOnReceiver!=null){
 				try {
 					deviceStateOnReceiver.onReceiverDeviceRes(JSONUitls.getJSONResult(1,"success",
@@ -841,7 +842,7 @@ public class VspOperation {
 		Log.e("content",content);
 		VspMessage vm = new VspMessage(VspDefine.codeTTBinary, sessionId);
 		VspProperty vp = vm.addProperty(VspDefine.propId);
-		vp.setIntValue(VspDefine.Id_type_idx, 1);
+		vp.setIntValue(VspDefine.Id_type_idx, 0);
 		vp.setIntValue(VspDefine.Id_id_idx, puId);
 		vp = vm.addProperty(VspDefine.propId);
 		vp.setIntValue(VspDefine.Id_type_idx, 0);

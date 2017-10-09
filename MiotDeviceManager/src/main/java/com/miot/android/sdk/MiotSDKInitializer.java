@@ -79,8 +79,6 @@ public class MiotSDKInitializer {
 
 			return SERVICE_START_MACERROR;
 		}
-
-
 		MiotSDKInitializer.MAC=mac.toUpperCase();
 		if (context==null){
 			return SERVICE_START_FAIL;
@@ -246,9 +244,12 @@ public class MiotSDKInitializer {
 			return;
 		}
 		String s=BinderManager.getInstance().getPlatformBind().sendPuToPu(id,MmwParseUartUtils.doLinkBindMake(uart));
-		if (onReceiver!=null){
-			onReceiver.onReceiverDeviceRes(s);
+		if (!s.equals("")){
+			if (onReceiver!=null){
+				onReceiver.onReceiverDeviceRes(s);
+			}
 		}
+
 		return;
 	}
 	/**
