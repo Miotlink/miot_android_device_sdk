@@ -15,7 +15,6 @@ import com.miot.android.binder.PlatformBind;
 import com.miot.android.listener.DeviceStateOnReceiver;
 import com.miot.android.manager.UDPManager;
 import com.miot.android.service.SmartService;
-import com.miot.android.task.HostAddressTask;
 import com.miot.android.utils.ACache;
 import com.miot.android.utils.JSONUitls;
 import com.miot.android.utils.MLContent;
@@ -71,7 +70,6 @@ public class MiotSDKInitializer {
 	 * @throws Exception
 	 */
 	public int init(Context context,String mac) throws Exception{
-		new HostAddressTask().execute(MLContent.FORMAL_URL);
 		if (mac.equals("")){
 			throw new Exception("mac is error");
 		}

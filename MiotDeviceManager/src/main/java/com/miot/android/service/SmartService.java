@@ -32,7 +32,7 @@ public class SmartService extends BaseService{
 		if (platformBind==null){
 			platformBind=new PlatformBind();
 		}
-		String localHost= ACache.get(this).getAsString(MLContent.FORMAL_SERVER_IP);
+		String localHost= ACache.get(this).getAsString(MLContent.FORMAL_SERVER_URL);
 		if (localHost==null){
 			new HostAddressTask().execute(MLContent.FORMAL_SERVER_URL);
 		}else{
@@ -51,7 +51,7 @@ public class SmartService extends BaseService{
 		switch (cmd){
 			case 100006:
 				VspOperation.vspCallback=this;
-				if (ACache.get(this).getAsString(MLContent.FORMAL_SERVER_IP)==null){
+				if (ACache.get(this).getAsString(MLContent.FORMAL_SERVER_URL)==null){
 					new HostAddressTask().execute(MLContent.FORMAL_SERVER_URL);
 				}
 				new PuTask(platformBind,mBaseHandler).execute("100001",MiotSDKInitializer.MAC,
@@ -76,7 +76,7 @@ public class SmartService extends BaseService{
 	public void loginRes(int errorCode, String errorMessage, String data) throws Exception {
 		Log.e("error",data);
 		Log.e("error",errorMessage);
-		if (ACache.get(this).getAsString(MLContent.FORMAL_SERVER_IP)==null){
+		if (ACache.get(this).getAsString(MLContent.FORMAL_SERVER_URL)==null){
 			ACache.get(this).put(MLContent.FORMAL_SERVER_URL,VspOperation.rsIp,24*60*60);
 		}
 		if (errorCode==1){
