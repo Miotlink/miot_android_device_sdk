@@ -774,8 +774,6 @@ public class VspOperation {
 			return false;
 		}
 		send=0;
-		Log.e("puId",puId+"");
-		Log.e("content",content+"");
 		VspMessage vm = new VspMessage(VspDefine.codeTTBinary, sessionId);
 		VspProperty vp = vm.addProperty(VspDefine.propId);
 		vp.setIntValue(VspDefine.Id_type_idx, 0);

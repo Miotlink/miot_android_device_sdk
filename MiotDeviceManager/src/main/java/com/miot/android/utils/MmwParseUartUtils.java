@@ -59,6 +59,32 @@ public class MmwParseUartUtils {
 		return sMlcc;
 
 	}
+	public static String doLinkBindCuMake(String UserBinaryData) {
+
+		String CodeName="";
+		String Chn="";
+		int len=0;
+		String sMlcc="";
+		try {
+			CodeName = "UartUpLoadData";
+			Chn = "0";
+			byte[] by=hexString2Bytes(UserBinaryData);
+			len = by.length;
+			sMlcc = "CodeName=" + CodeName + "&Chn=" + Chn + "&Len="
+					+ len
+					+ "&UserBinaryData=";
+			byte[] mlcc = sMlcc.getBytes("ISO-8859-1");
+			byte[] bs = new byte[by.length + mlcc.length];
+			System.arraycopy(mlcc, 0, bs, 0, mlcc.length);
+			System.arraycopy(by, 0, bs, mlcc.length, by.length);
+			sMlcc = new String(bs, "ISO-8859-1");
+			return sMlcc;
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return sMlcc;
+
+	}
 
 	public static String getMlccUart(String s){
 		String result="";

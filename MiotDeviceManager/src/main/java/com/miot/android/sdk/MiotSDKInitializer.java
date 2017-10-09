@@ -253,11 +253,11 @@ public class MiotSDKInitializer {
 	/**
 	 * 发送数据控制设备
 	 * @param id 需要向设备发送的唯一ID
-	 * @param puName 该设备的MAC地址
+
 	 * @param uart 串口数据格式为F1F1*********7E结尾
 	 * @return
 	 */
-	public void miotlinkPlatform_sendToCu(Integer id,String puName,String uart) throws Exception{
+	public void miotlinkPlatform_sendToCu(Integer id,String uart) throws Exception{
 		if (onReceiver==null){
 			throw new Exception("onReceiver null");
 		}
@@ -266,61 +266,36 @@ public class MiotSDKInitializer {
 				onReceiver.onReceiverDeviceRes(JSONUitls.getJSONResult(MLContent.MIOT_INIT_GET_PULIST_LOGIN,SmartService.errorMessage,""));
 			}
 		}
-		String state=ACache.get(context).getAsString(id+"");
-		if (state==null){
-			String res=WebServerManager.getInstance().getPuState
-					(MiotSDKInitializer.MAC,JSONUitls.getSessionId(sharedPreferencesUtil.getPu()),puName,id+"");
-			if (res.equals("")){
-				if (onReceiver!=null){
-					onReceiver.onReceiverDeviceRes(JSONUitls.getJSONResult(MLContent.MIOT_INIT_GET_PULIST_SERVICE_FAIL,"请求服务器失败",""));
-				}
-				return ;
-			}
-			JSONObject jsonObject=new JSONObject(res);
-			if (jsonObject==null){
-				if (onReceiver!=null){
-					onReceiver.onReceiverDeviceRes(JSONUitls.getJSONResult(MLContent.MIOT_INIT_GET_PULIST_SERVICE_FAIL,"请求服务器失败",""));
-				}
-				return ;
-			}
-			JSONObject body=new JSONObject(jsonObject.getString("body"));
-			if (body==null){
-				if (onReceiver!=null){
-					onReceiver.onReceiverDeviceRes(JSONUitls.getJSONResult(MLContent.MIOT_INIT_GET_PULIST_SERVICE_FAIL,"请求服务器失败",""));
-				}
-			}
-			if (body.getString("resultCode").equals("1")){
-				JSONObject jsonObject1=new JSONObject(body.getString("data"));
-				if (!jsonObject1.isNull("state")){
-					ACache.get(context).put(id+"",jsonObject1.getString("state"),2*60);
-					if (jsonObject1.getString("state").equals("0")){
-						if (onReceiver!=null){
-							onReceiver.onReceiverDeviceRes(JSONUitls.getJSONResult(MLContent.MIOT_INIT_PU_ONSTATE,"设备已经离线",""));
-						}
-						return;
-					}
-					BinderManager.getInstance().getPlatformBind().sendPuToPu(id,MmwParseUartUtils.doLinkBindMake(uart));
-				}
-				return;
-			}
-			if (onReceiver!=null){
-				onReceiver.onReceiverDeviceRes(JSONUitls.getJSONResult(Integer.parseInt(jsonObject.getString("resultCode")),jsonObject.getString("resultMsg"),""));
-			}
-			return;
-		}
-		if (state.equals("0")){
-			if (onReceiver!=null){
-				onReceiver.onReceiverDeviceRes(JSONUitls.getJSONResult(MLContent.MIOT_INIT_PU_ONSTATE,"设备已经离线",""));
-			}
-			return;
-		}
-		String s=BinderManager.getInstance().getPlatformBind().sendPuToPu(id,MmwParseUartUtils.doLinkBindMake(uart));
+		String s=BinderManager.getInstance().getPlatformBind().sendPuToCu(id,MmwParseUartUtils.doLinkBindCuMake(uart));
 		if (onReceiver!=null){
 			onReceiver.onReceiverDeviceRes(s);
 		}
 		return;
 	}
 
+
+//	/**
+//	 * 发送数据控制设备
+//	 * @param id 需要向设备发送的唯一ID
+//
+//	 * @param uart 串口数据格式为F1F1*********7E结尾
+//	 * @return
+//	 */
+//	public void miotlinkPlatform_sendToScene(Integer id,String uart) throws Exception{
+//		if (onReceiver==null){
+//			throw new Exception("onReceiver null");
+//		}
+//		if (!sharedPreferencesUtil.getLogin()){
+//			if (onReceiver!=null){
+//				onReceiver.onReceiverDeviceRes(JSONUitls.getJSONResult(MLContent.MIOT_INIT_GET_PULIST_LOGIN,SmartService.errorMessage,""));
+//			}
+//		}
+//		String s=BinderManager.getInstance().getPlatformBind().sendPuToCu(id,MmwParseUartUtils.doLinkBindMake(uart));
+//		if (onReceiver!=null){
+//			onReceiver.onReceiverDeviceRes(s);
+//		}
+//		return;
+//	}
 
 	/**
 	 * 获取设备列表
