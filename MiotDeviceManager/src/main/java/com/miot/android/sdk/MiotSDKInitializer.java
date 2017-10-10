@@ -53,6 +53,10 @@ public class MiotSDKInitializer {
 		return instance;
 	}
 
+	public void setDegug(boolean isTest){
+		MLContent.DEVELOPMENT_ENVIRONMENT=isTest;
+
+	}
 
 	public Context context=null;
 
@@ -81,6 +85,7 @@ public class MiotSDKInitializer {
 		if (context==null){
 			return SERVICE_START_FAIL;
 		}
+		MLContent.setDevelopmentEnvironment(MLContent.DEVELOPMENT_ENVIRONMENT);
 		sharedPreferencesUtil=SharedPreferencesUtil.getInstance(context);
 		sharedPreferencesUtil.setMac(mac.toUpperCase());
 		this.context=context;
@@ -241,7 +246,7 @@ public class MiotSDKInitializer {
 			}
 			return;
 		}
-		String s=BinderManager.getInstance().getPlatformBind().sendPuToPu(id,MmwParseUartUtils.doLinkBindMake(uart));
+		String s=BinderManager.getInstance().getPlatformBind().sendPuToPu(id,MmwParseUartUtils.doLinkBindCuMake(uart));
 		if (!s.equals("")){
 			if (onReceiver!=null){
 				onReceiver.onReceiverDeviceRes(s);
@@ -340,6 +345,7 @@ public class MiotSDKInitializer {
 		if (instance!=null){
 			instance=null;
 		}
+		MLContent.DEVELOPMENT_ENVIRONMENT=true;
 	}
 
 

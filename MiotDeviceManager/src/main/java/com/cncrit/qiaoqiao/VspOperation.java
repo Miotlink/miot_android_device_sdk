@@ -535,7 +535,7 @@ public class VspOperation {
 				vp.getIntValue(VspDefine.TTContent_type_idx)+","+
 				vp.getIntValue(VspDefine.TTContent_userTag_idx)+","+
 				content+"}";
-			Log.e("message",s);
+
 			if (deviceStateOnReceiver!=null){
 				try {
 					deviceStateOnReceiver.onReceiverDeviceRes(JSONUitls.getJSONResult(1,"success",
@@ -669,8 +669,6 @@ public class VspOperation {
 	}
 
 	private static void updateLoginActTitle(String title) {
-
-		Log.e("cms",title);
 	}
 
 
@@ -752,8 +750,6 @@ public class VspOperation {
 			return false;
 		}
 		send=0;
-		Log.e("puId",puId+"");
-		Log.e("content",content+"");
 		VspMessage vm = new VspMessage(VspDefine.codeTTBinary, sessionId);
 		VspProperty vp = vm.addProperty(VspDefine.propId);
 		vp.setIntValue(VspDefine.Id_type_idx, 0);
@@ -794,8 +790,6 @@ public class VspOperation {
 			return false;
 		}
 		send=0;
-		Log.e("puId",puId+"");
-		Log.e("content",content+"");
 		VspMessage vm = new VspMessage(VspDefine.codeTTBinary, sessionId);
 		VspProperty vp = vm.addProperty(VspDefine.propId);
 		vp.setIntValue(VspDefine.Id_type_idx, 0);
@@ -837,7 +831,6 @@ public class VspOperation {
 			return false;
 		}
 		send=0;
-		Log.e("content",content);
 		VspMessage vm = new VspMessage(VspDefine.codeTTBinary, sessionId);
 		VspProperty vp = vm.addProperty(VspDefine.propId);
 		vp.setIntValue(VspDefine.Id_type_idx, 0);
@@ -891,44 +884,7 @@ public class VspOperation {
 		Reset();
 	}
 
-	public static boolean RefreshCameras() {
-		if (!HasLogin()) {
-			return false;
-		}
-		if (cmsVc == null) {
-			return false;
-		}
-		VspMessage vm = new VspMessage(VspDefine.codeGetPuList, sessionId);
-		VspProperty vp = vm.addProperty(VspDefine.propCuId);
-		vp.setIntValue(VspDefine.CuId_cuId_idx, cuId);
-		VspProperty vp1 = vm.addProperty(VspDefine.propList);
-		vp1.setIntValue(VspDefine.List_startRowNum_idx, 0);
-		vp1.setIntValue(VspDefine.List_endRowNum_idx, 50);
-		return cmsVc.send(vm);
-	}
 
-	public static boolean AutoLogin(Context c) {
-		if (HasLogin())
-			return true;
-		String sAutoLogin = Tools.GetProfileString("login", "autoLogin",
-				"false");
-		if (sAutoLogin.toLowerCase().equals("false"))
-			return false;
-		String sUserName = Tools.GetProfileString("login", "userName", "");
-		if (sUserName.equals(""))
-			return false;
-		String sPassword = Tools.GetProfileString("login", "password", "");
-		if (sPassword.equals(""))
-			return false;
-		return VspOperation.Login( sUserName, sPassword);
-	}
 
-	public static boolean GetAdvList() {
-		if (cmsVc == null) {
-			return false;
-		}
-		VspMessage vm = new VspMessage(VspDefine.codeGetAdvList,
-				VspDefine.NONE_SES_ID);
-		return cmsVc.send(vm);
-	}
+
 }
