@@ -6,7 +6,7 @@ package com.miot.android.utils;
 public class MLContent {
 
 
-	public static boolean DEVELOPMENT_ENVIRONMENT=true;
+	public static boolean DEVELOPMENT_ENVIRONMENT=false;
 //	public static final String FORMAL_SERVER_URL="118.190.67.214";
 //	public static String FORMAL_SERVER_IP="118.190.67.214";
 //	public final static String FORMAL_URL="118.190.67.214";
@@ -20,7 +20,7 @@ public class MLContent {
 	public final static String NAMESPACE = "http://www.miotlink.org/openBuzService/";
 
 	public static final void setDevelopmentEnvironment(boolean isTest){
-		if (!isTest){
+		if (isTest){
 			FORMAL_SERVER_URL="60.191.23.28";
 			FORMAL_SERVER_IP="60.191.23.28";
 			FORMAL_URL="60.191.23.28";
