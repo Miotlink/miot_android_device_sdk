@@ -53,7 +53,7 @@ public class MiotSDKInitializer {
 		return instance;
 	}
 
-	public void setDegug(boolean isTest){
+	public void setDebug(boolean isTest){
 		MLContent.DEVELOPMENT_ENVIRONMENT=isTest;
 
 	}
