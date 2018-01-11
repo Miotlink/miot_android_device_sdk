@@ -12,6 +12,8 @@ public class MLContent {
 //	public final static String FORMAL_URL="118.190.67.214";
 	public static  String FORMAL_SERVER_URL="60.191.23.28";
 	public static String FORMAL_SERVER_IP="60.191.23.28";
+
+
 //	public final static String FORMAL_URL="dev.51miaomiao.com";
 	public static  String FORMAL_URL="60.191.23.28";
 	public static String ENDPOINT = "http://"
